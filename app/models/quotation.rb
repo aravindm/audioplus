@@ -22,6 +22,7 @@ class Quotation < ActiveRecord::Base
     if status == 'Invoice' && invoice_type == 'Invoice'
       self.invoice_number = self.invoice_number.nil? ? Quotation.maximum('invoice_number').to_i + 1 : self.invoice_number;
       self.service_tax = ((total_price * 12.36)/100).floor
+      self.invoice_raised_date = Date.today
     end
   end
 
@@ -31,6 +32,10 @@ class Quotation < ActiveRecord::Base
 
   def is_open_for_edits?
     self.status != 'Invoice' || self.invoice_type == 'Proforma Invoice'
+  end
+
+  def self.filter(param1, param2)
+      find(:all, :conditions => ['invoice_raised_date not null AND invoice_raised_date between ? AND ?', param1, param2])
   end
 
 end

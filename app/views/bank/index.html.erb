@@ -1,0 +1,37 @@
+<h1>Bank </h1>
+
+<p> Start Date: <%= text_field_tag 'start_date', nil %>    End Date: <%= text_field_tag 'end_date', nil %> </p>
+<%= link_to "Show", "/bank/index?param1='2013-10-20'&param2='2013-11-01'" %>
+
+
+<%if !@bank_details.nil?%>
+
+<table class="table table-condensed table-striped table-bordered">
+  <thead>
+  <tr>
+    <th><strong>Sl No</strong></th>
+    <th><strong>Invoice Number</strong></th>
+    <th><strong>Invoice Date</strong></th>
+    <th><strong>Name</strong></th>
+    <th><strong>Service Tax</strong></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @bank_details.each do |bank_detail|%>
+      <tr>
+        <td></td>
+        <td></td>
+        <td><%= bank_detail[:invoice_raised_date] %></td>
+        <td><%= bank_detail[:name] %></td>
+        <td><%= bank_detail[:service_tax] %></td>
+      </tr>
+  <% end %>
+  <%end%>
+  </tbody>
+</table>
+
+<script>
+    $('#start_date').datepicker({format: 'dd-mm-yyyy', autoclose:true, todayHighlight:true, clearBtn:true})
+    $('#end_date').datepicker({format: 'dd-mm-yyyy', autoclose:true, todayHighlight:true, clearBtn:true})
+</script>
